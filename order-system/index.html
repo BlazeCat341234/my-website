@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order System</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 20px; }
+  h1 { margin-bottom: 10px; }
+  table { width: 100%; border-collapse: collapse; margin-bottom: 20px; table-layout: fixed; }
+  th, td { border: 1px solid #ccc; padding: 8px; text-align: left; overflow: hidden; }
+  th { background-color: #f0f0f0; cursor: col-resize; position: relative; }
+  input[type="text"], input[type="email"], input[type="number"], textarea { width: 100%; box-sizing: border-box; resize: vertical; }
+  button { padding: 6px; margin: 4px 2px; }
+  .section { margin-bottom: 30px; }
+  .expandable { max-height: 400px; overflow: auto; }
+</style>
+</head>
+<body>
+
+<h1>Order System</h1>
+
+<div class="section expandable">
+  <h2>Add New Order</h2>
+  <input type="text" id="customer_name" placeholder="Customer Name">
+  <input type="email" id="email" placeholder="Customer Email">
+  <input type="number" id="price" placeholder="Price">
+  <textarea id="description" placeholder="Description" rows="2"></textarea>
+  <button onclick="addOrder()">Add Order</button>
+  <button onclick="deleteAllOrders()">Delete All Orders</button>
+</div>
+
+<div class="section expandable">
+  <h2>Current Orders</h2>
+  <table id="currentOrdersTable">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Price</th>
+        <th>Description</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<div class="section expandable">
+  <h2>Previous Orders</h2>
+  <table id="previousOrdersTable">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Price</th>
+        <th>Description</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<script>
+const API_URL = "http://localhost:3000";
+
+async function fetchOrders() {
+  const res = await fetch(`${API_URL}/orders`);
+  const orders = await res.json();
+  displayOrders(orders);
+}
+
+function displayOrders(orders) {
+  const currentTable = document.querySelector("#currentOrdersTable tbody");
+  const previousTable = document.querySelector("#previousOrdersTable tbody");
+  currentTable.innerHTML = "";
+  previousTable.innerHTML = "";
+
+  orders.forEach(order => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${order.id}</td>
+      <td><input type="text" value="${order.customer_name}" ${order.status === "done" ? "readonly" : ""}></td>
+      <td><input type="email" value="${order.email}" ${order.status === "done" ? "readonly" : ""}></td>
+      <td><input type="number" value="${order.price}" ${order.status === "done" ? "readonly" : ""}></td>
+      <td><textarea rows="2" ${order.status === "done" ? "readonly" : ""}>${order.description}</textarea></td>
+      <td>${order.status}</td>
+      <td>
+        ${order.status === "current" ? `<button onclick="markDone(${order.id})">Mark Done</button>` : `<button onclick="undoDone(${order.id})">Undo Mark</button>`}
+        <button onclick="editOrder(${order.id}, this)">Save</button>
+        <button onclick="deleteOrder(${order.id})">Delete</button>
+      </td>
+    `;
+    if(order.status === "current") currentTable.appendChild(row);
+    else previousTable.appendChild(row);
+  });
+
+  enableColumnResize();
+}
+
+async function addOrder() {
+  const customer_name = document.getElementById("customer_name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const price = parseFloat(document.getElementById("price").value);
+  const description = document.getElementById("description").value.trim();
+
+  if(!customer_name || !email || isNaN(price)) {
+    alert("Please fill out all fields.");
+    return;
+  }
+
+  await fetch(`${API_URL}/orders`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ customer_name, email, price, description })
+  });
+
+  document.getElementById("customer_name").value = "";
+  document.getElementById("email").value = "";
+  document.getElementById("price").value = "";
+  document.getElementById("description").value = "";
+
+  fetchOrders();
+}
+
+async function editOrder(id, btn) {
+  const row = btn.closest("tr");
+  const customer_name = row.cells[1].querySelector("input").value.trim();
+  const email = row.cells[2].querySelector("input").value.trim();
+  const price = parseFloat(row.cells[3].querySelector("input").value);
+  const description = row.cells[4].querySelector("textarea").value.trim();
+
+  await fetch(`${API_URL}/orders/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ customer_name, email, price, description })
+  });
+
+  fetchOrders();
+}
+
+async function markDone(id) {
+  await fetch(`${API_URL}/orders/${id}/status`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ status: "done" })
+  });
+  fetchOrders();
+}
+
+async function undoDone(id) {
+  await fetch(`${API_URL}/orders/${id}/status`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ status: "current" })
+  });
+  fetchOrders();
+}
+
+async function deleteOrder(id) {
+  if(confirm("Are you sure you want to delete this order?")) {
+    await fetch(`${API_URL}/orders/${id}`, { method: "DELETE" });
+    fetchOrders();
+  }
+}
+
+async function deleteAllOrders() {
+  if(confirm("Are you sure you want to delete ALL orders?")) {
+    await fetch(`${API_URL}/orders`, { method: "DELETE" });
+    fetchOrders();
+  }
+}
+
+// --- Column Resize ---
+function enableColumnResize() {
+  const tableHeaders = document.querySelectorAll("th");
+  tableHeaders.forEach(th => {
+    th.onmousedown = function(e) {
+      const startX = e.pageX;
+      const startWidth = th.offsetWidth;
+      document.onmousemove = function(e) {
+        const newWidth = startWidth + (e.pageX - startX);
+        if(newWidth > 50) th.style.width = newWidth + "px";
+      }
+      document.onmouseup = function() {
+        document.onmousemove = null;
+        document.onmouseup = null;
+      }
+    }
+  });
+}
+
+// Initial fetch
+fetchOrders();
+</script>
+
+</body>
+</html>
