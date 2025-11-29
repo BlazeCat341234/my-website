@@ -1,4 +1,3 @@
-// functions/orders.js
 export async function onRequest(context) {
   const { request, env } = context;
   const url = new URL(request.url);
@@ -6,8 +5,8 @@ export async function onRequest(context) {
   // GET /orders
   if (request.method === "GET" && url.pathname === "/orders") {
     const result = await env.DB.prepare("SELECT * FROM orders").all();
-    return new Response(JSON.stringify(result.results), {
-      headers: { "Content-Type": "application/json" }
+    return new Response(JSON.stringify(result.results), { 
+      headers: { "Content-Type": "application/json" } 
     });
   }
 
@@ -24,7 +23,7 @@ export async function onRequest(context) {
     .run();
 
     return new Response(JSON.stringify({ id: result.lastInsertId }), {
-      headers: { "Content-Type": "application/json" }
+      headers: { "Content-Type": "application/json" },
     });
   }
 
