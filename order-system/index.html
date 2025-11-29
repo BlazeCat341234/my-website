@@ -22,10 +22,10 @@
 
 <div class="section expandable">
   <h2>Add New Order</h2>
-  <input type="text" id="Name" placeholder="Customer Name">
-  <input type="email" id="Email" placeholder="Customer Email">
-  <input type="number" id="Price" placeholder="Price">
-  <textarea id="Description" placeholder="Description" rows="2"></textarea>
+  <input type="text" id="name" placeholder="Name">
+  <input type="email" id="email" placeholder="Email">
+  <input type="number" id="price" placeholder="Price">
+  <textarea id="description" placeholder="Description" rows="2"></textarea>
   <button onclick="addOrder()">Add Order</button>
   <button onclick="deleteAllOrders()">Delete All Orders</button>
 </div>
@@ -67,11 +67,10 @@
 </div>
 
 <script>
-// Cloudflare Worker = same origin
-const API_URL = "";
+const API_URL = "https://orders.YOUR_SUBDOMAIN.workers.dev"; // Replace with your Worker URL
 
 async function fetchOrders() {
-  const res = await fetch(`/orders`);
+  const res = await fetch(`${API_URL}/orders`);
   const orders = await res.json();
   displayOrders(orders);
 }
@@ -79,30 +78,25 @@ async function fetchOrders() {
 function displayOrders(orders) {
   const currentTable = document.querySelector("#currentOrdersTable tbody");
   const previousTable = document.querySelector("#previousOrdersTable tbody");
-
   currentTable.innerHTML = "";
   previousTable.innerHTML = "";
 
   orders.forEach(order => {
     const row = document.createElement("tr");
     row.innerHTML = `
-      <td>${order.ID}</td>
+      <td>${order.id}</td>
       <td><input type="text" value="${order.Name}" ${order.Status === "done" ? "readonly" : ""}></td>
       <td><input type="email" value="${order.Email}" ${order.Status === "done" ? "readonly" : ""}></td>
       <td><input type="number" value="${order.Price}" ${order.Status === "done" ? "readonly" : ""}></td>
       <td><textarea rows="2" ${order.Status === "done" ? "readonly" : ""}>${order.Description}</textarea></td>
       <td>${order.Status}</td>
       <td>
-        ${order.Status === "current" 
-          ? `<button onclick="markDone(${order.ID})">Mark Done</button>`
-          : `<button onclick="undoDone(${order.ID})">Undo</button>`
-        }
-        <button onclick="editOrder(${order.ID}, this)">Save</button>
-        <button onclick="deleteOrder(${order.ID})">Delete</button>
+        ${order.Status === "current" ? `<button onclick="markDone(${order.id})">Mark Done</button>` : `<button onclick="undoDone(${order.id})">Undo Mark</button>`}
+        <button onclick="editOrder(${order.id}, this)">Save</button>
+        <button onclick="deleteOrder(${order.id})">Delete</button>
       </td>
     `;
-
-    if (order.Status === "current") currentTable.appendChild(row);
+    if(order.Status === "current") currentTable.appendChild(row);
     else previousTable.appendChild(row);
   });
 
@@ -110,33 +104,26 @@ function displayOrders(orders) {
 }
 
 async function addOrder() {
-  const Name = document.getElementById("Name").value.trim();
-  const Email = document.getElementById("Email").value.trim();
-  const Price = parseFloat(document.getElementById("Price").value);
-  const Description = document.getElementById("Description").value.trim();
+  const Name = document.getElementById("name").value.trim();
+  const Email = document.getElementById("email").value.trim();
+  const Price = parseFloat(document.getElementById("price").value);
+  const Description = document.getElementById("description").value.trim();
 
-  if (!Name || !Email || isNaN(Price)) {
+  if(!Name || !Email || isNaN(Price)) {
     alert("Please fill out all fields.");
     return;
   }
 
-  await fetch(`/orders`, {
+  await fetch(`${API_URL}/orders`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      Name,
-      Email,
-      Price,
-      Description,
-      Status: "current",
-      Action: ""
-    })
+    body: JSON.stringify({ Name, Email, Price, Description })
   });
 
-  document.getElementById("Name").value = "";
-  document.getElementById("Email").value = "";
-  document.getElementById("Price").value = "";
-  document.getElementById("Description").value = "";
+  document.getElementById("name").value = "";
+  document.getElementById("email").value = "";
+  document.getElementById("price").value = "";
+  document.getElementById("description").value = "";
 
   fetchOrders();
 }
@@ -147,19 +134,18 @@ async function editOrder(id, btn) {
   const Email = row.cells[2].querySelector("input").value.trim();
   const Price = parseFloat(row.cells[3].querySelector("input").value);
   const Description = row.cells[4].querySelector("textarea").value.trim();
-  const Status = row.cells[5].textContent.trim();
 
-  await fetch(`/orders/${id}`, {
+  await fetch(`${API_URL}/orders/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ Name, Email, Price, Description, Status, Action: "" })
+    body: JSON.stringify({ Name, Email, Price, Description })
   });
 
   fetchOrders();
 }
 
 async function markDone(id) {
-  await fetch(`/orders/${id}/status`, {
+  await fetch(`${API_URL}/orders/${id}/status`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ Status: "done" })
@@ -168,7 +154,7 @@ async function markDone(id) {
 }
 
 async function undoDone(id) {
-  await fetch(`/orders/${id}/status`, {
+  await fetch(`${API_URL}/orders/${id}/status`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ Status: "current" })
@@ -177,20 +163,20 @@ async function undoDone(id) {
 }
 
 async function deleteOrder(id) {
-  if (confirm("Are you sure you want to delete this order?")) {
-    await fetch(`/orders/${id}`, { method: "DELETE" });
+  if(confirm("Are you sure you want to delete this order?")) {
+    await fetch(`${API_URL}/orders/${id}`, { method: "DELETE" });
     fetchOrders();
   }
 }
 
 async function deleteAllOrders() {
-  if (confirm("Delete ALL orders? This cannot be undone.")) {
-    await fetch(`/orders`, { method: "DELETE" });
+  if(confirm("Are you sure you want to delete ALL orders?")) {
+    await fetch(`${API_URL}/orders`, { method: "DELETE" });
     fetchOrders();
   }
 }
 
-// Column resize
+// Column Resize
 function enableColumnResize() {
   const tableHeaders = document.querySelectorAll("th");
   tableHeaders.forEach(th => {
@@ -199,7 +185,7 @@ function enableColumnResize() {
       const startWidth = th.offsetWidth;
       document.onmousemove = function(e) {
         const newWidth = startWidth + (e.pageX - startX);
-        if (newWidth > 50) th.style.width = newWidth + "px";
+        if(newWidth > 50) th.style.width = newWidth + "px";
       }
       document.onmouseup = function() {
         document.onmousemove = null;
@@ -209,6 +195,7 @@ function enableColumnResize() {
   });
 }
 
+// Initial fetch
 fetchOrders();
 </script>
 
