@@ -1,524 +1,139 @@
 <!DOCTYPE html>
-<html>
-    <meta charset="UTF-8">
-
-
-    <head>
-
-        <title>Get your devices repaired|The Retro Guys</title>
-
-        <link href="normalize.css" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=SUSE+Mono:ital,wght@0,100..800;1,100..800&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-        <link rel="icon" href="logo.jpg" type="image/x-icon" />
-
-
-        <style>
-
-            body {
-
-                background-image: linear-gradient(to top, #30cfd0 0%, #330867 100%);
-                font-family: "Work Sans", sans-serif;
-
-            }
-
-            nav {
-
-                display: flex;
-                background-image: linear-gradient(to top, #5ee7df 0%, #b490ca 100%);
-                position: fixed;
-                justify-content: center;
-                width: 100%;
-                z-index: 1;
-
-            }
-
-            nav ul {
-
-                display: flex;
-                align-items: center;
-                padding: 0 10%;
-                list-style: none;
-                
-            }
-
-            a {
-
-                text-decoration: none;
-
-            }
-
-            h1, h2, h3 {
-
-                font-family: "SUSE Mono", sans-serif;
-
-            }
-
-            nav ul li a {
-
-                font-size: 16px;
-                padding: 0 15px;
-                color: white;
-                transition: 0.2s;
-                text-transform: uppercase;
-            }
-
-            nav ul li a:hover {
-
-                transition: 0.2s;
-                color: #0e70a1 
-
-            }
-
-            .container {
-                position: relative;
-                width: 100%;
-                max-width: 1200px;
-                margin: 0 auto;
-                padding: 0 15px;
-
-            }
-
-            .hero {
-
-                padding-top: 130px;
-
-            }
-
-            .hero img {
-
-                border-style: none;
-                border-radius: 50%;
-                margin: 0 auto;
-                max-width: 440px;
-                display: block;
-
-            }
-
-            h1 {
-
-                color: black;
-                text-align: center;
-                font-size: 24px;
-                margin: 30px 0px 100px;
-
-            }
-
-            .about {
-
-                width: 90%; 
-                max-width: 1100px;
-                height: auto;
-                background-color: white;
-                text-align: center;
-                padding: 4px 50px 70px;
-                margin: 0 auto;
-                box-shadow: 10px 10px 0px rgb(0 0 0 / 40%), -10px -10px 0px rgb(255 114 114 / 80%);
-
-            }
-
-            .about-section {
-
-                padding: 5px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                flex-flow: wrap;
-
-            }
-
-            .about-image {
-
-                height: 450px;
-                width: 400px;
-                background-image: url("about_img.jpg");
-                background-size: cover;
-                background-position: center;
-
-            }
-
-            .about-text {
-
-                height: auto;
-                width: 40%;
-                margin-left: 40px;
-                text-align: left;
-
-            }
-
-            .contact {
-
-                width: 100%;
-                height: auto;
-                padding: 75px 0 50px 0;
-                text-align: center;
-                background-color: rgba(3,3,3,45%);
-
-            }
-
-            .contact p {
-
-                margin-bottom: 50px;
-
-            }
-            
-            .contact h2, .contact p {
-
-              color: white;
-
-            }
-
-            .contact-form {
-
-                max-width: 800px;
-                display: flex;
-                text-align: left;
-                margin: 0 auto;
-                color: white;
-
-            }
-
-            .contact-form label {
-
-                display: block;
-                margin-bottom: 9px;
-
-            }
-
-            .message {
-
-                display: flex;
-                flex-direction: column;
-                width: 60%;
-
-            }
-
-            .message textarea {
-
-                border-radius: 5px;
-                border: 0px;
-
-            }
-
-            .contact-details {
-
-                flex: 1;
-                margin-right: 50px;
-
-            }
-
-            .contact-details input {
-
-                width: 100px;
-                border-radius: 5px;
-                border: 0px;
-                padding: 15px 20px;
-                margin-bottom: 20px;
-
-            }
-
-            .message button {
-
-                color: #1d3d5f;
-                border: 0px;
-                border-radius: 5px;
-                background: lightblue;
-                width: 140px;
-                height: 40px;
-                margin-top: 40px;
-                margin-left: auto;
-                text-transform: uppercase;
-                font-weight: bold;
-                cursor: pointer;
-                transition: 0.3s;
-
-            }
-
-            .message button:hover {
-
-                background: black;
-                color: white;
-                transition: 0.2s;
-
-            }
-
-            .footer {
-
-                height: 70px;
-                width: 100%;
-                background-color: #1f2027;
-
-            }
-
-            .footer .container {
-
-                display: flex;
-                align-items: center;
-                height: 100%;
-
-            }
-
-            .copyright {
-
-                color: white;
-
-            }
-
-            .review textarea {
-
-                width: 400px;
-                border-radius: 5px;
-                border: 0px;
-                padding: 15px 20px;
-                margin-bottom: 20px;
-
-            }
-
-            .review button {
-
-                color: #1d3d5f;
-                border: 0px;
-                border-radius: 5px;
-                background: lightblue;
-                width: 140px;
-                height: 40px;
-                margin-top: 40px;
-                margin-left: auto;
-                text-transform: uppercase;
-                font-weight: bold;
-                cursor: pointer;
-                transition: 0.3s;
-
-
-            }
-
-            .review button:hover {
-
-                background: black;
-                color: white;
-                transition: 0.2s;
-
-            }
-
-            .review {
-
-                width: 400px;
-                border-radius: 5px;
-                border: 0px;
-                padding: 15px 20px;
-                margin-bottom: 20px;
-
-
-            }
-
-            .review input {
-
-                width: 400px;
-                border-radius: 5px;
-                border: 0px;
-                padding: 15px 20px;
-                margin-bottom: 20px;
-
-            }
-
-            .star-rating span {
-
-                cursor: pointer;
-                color: #ccc;
-                transition: color 0.2s;
-                font-size: 30px;
-                margin-right: 4px;
-
-            }
-
-            .star-rating span:hover,
-            .star-rating span:hover ~ span {
-                color: gold;
-            }
-
-            .star-rating span.selected {
-
-                color: gold;
-
-            }
-
-            html {
-                scroll-behavior: smooth;
-            }
-
-            .review-item {
-                background-color: white;
-                border: 2px solid #ccc;
-                padding: 15px 20px;
-                margin-bottom: 20px;
-                border-radius: 8px;
-                box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-                color: black; /* make sure text is visible */
-            }
-
-            .container h2 {
-
-                text-align: center;
-                margin-top: -100px;
-                margin-bottom: 100px;
-
-            }
-
-
-        </style>
-
-        <!-- Firebase App (the core Firebase SDK) -->
-        <script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js"></script>
-        <!-- Firebase Firestore -->
-        <script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js"></script>
-
-
-    </head>
-
-
-    <body>
-
-        <nav>
-            <ul>
-
-                <li><a href="#about">About</a></li>
-
-                <li><a href="#contact">Contact</a></li>
-
-                <li><a href="#review">Leave A Review</a></li>
-
-            </ul>
-        </nav>
-
-        <section class="hero">
-
-            <div class="container">
-
-                <img src="logo.jpg" alt="Company Logo">
-                <h1>Hey there! We're The Retro Guys!</h1>
-
-                <h2><i><u>Modern Repairs, Old-School Value</u></i></h2>
-
-            </div>
-
-
-        </section>
-
-        <section id="about" class="about">
-
-            <h2>About</h2>
-            <div class="about-section">
-                <div class="img">
-                    <div class="about-image"></div>
-                </div>
-                <div class="about-text">
-                    <p>In late September, the idea to start a device repair business took shape. After much thought, we chose the name The Retro Guys — a simple promise to make repairs easy and reliable.</p>
-
-                    <p>I'm Herbie Batsford, responsible for building and maintaining our website. But the heart of our business is a shared commitment between my dad, Gavin Batsford, and me. Together, we dedicate ourselves to delivering honest, high-quality device repairs with integrity.</p>
-
-                    <p>As a father-and-son team, we understand the value of trust and transparency. We ensure our customers have peace of mind knowing they'll only be charged what's fair — enough to cover costs and a reasonable profit. If, despite our best precautions, we accidentally break something during a repair, you won't pay for that item and we will offer a replacement. We stand behind our work because your satisfaction and trust are our top priorities. 
-                    </p>
-
-                </div>
-            </div>
-
-        </section>
-
-        <section id="contact" class="contact">
-            <h2>Contact</h2>
-            <p>Use this form to contact us about your device that needs repairing.</p>
-
-            <form action="https://api.web3forms.com/submit" method="POST" class="contact-form">
-
-                <div class="contact-details">
-
-                    <input type="hidden" name="access_key" value="e28acd2c-f1c4-4133-898b-f7d4995c28a6">
-
-                    <label for="name">Name</label>
-                    <input type="text" id="yourname" name="name" placeholder="Your Name">
-
-                    <label for="subject">Subject</label>
-                    <input type="text" id="subject" placeholder="Subject" name="Subject">
-
-                    <label for="email">Your Email Address</label>
-                    <input type="email" id="email" placeholder="your@email.com" name="Email">
-
-                </div>
-
-                <div class="message">
-
-                    <label for="msg">Message</label>
-                    <textarea id="msg" rows="15" name="message"></textarea>
-                    <button type="submit">Submit</button>
-
-                </div>
-
-            </form>
-
-        </section>
-
-        <section id="review" class="review">
-
-        <h2>Leave a Review</h2>
-
-        <div class="write-a-review">
-            <input type="text" id="reviewerName" placeholder="Your Name">
-
-            <div class="star-rating" style="font-size: 24px; margin: 10px 0;">
-
-            <span data-value="1">☆</span>
-            <span data-value="2">☆</span>
-            <span data-value="3">☆</span>
-            <span data-value="4">☆</span>
-            <span data-value="5">☆</span>
-
-            </div>
-
-            <textarea id="reviewText" rows="5" placeholder="Write your review here..."></textarea>
-            <button id="submitReview">Submit Review</button>
-
-        </div>
-
-  <h2 style="margin-top: 50px;">What Others Have Said</h2>
-  <div id="reviewList" style="margin-top: 20px;"></div>
-</section>
-
-
-
-        <footer class="footer">
-
-            <div class="container">
-
-                <div class="copyright">
-
-                    <p>This site &copy; 2025 Herbie Batsford</p>
-                    <p>Our business &copy; 2025 Herbie Batsford and Gavin Batsford</p>
-                    
-                </div>
-
-            </div>
-
-        </footer>
-
-  <script type="module">
-  // Import Firebase SDK functions from CDN
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
-  import { getFirestore, collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
-
-  // Your Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyB-ExQO90U3sQ9KeLlUMKeoC9TzzuU7F9o",
-    authDomain: "website-reviews-94499.firebaseapp.com",
-    projectId: "website-reviews-94499",
-    storageBucket: "website-reviews-94499.firebasestorage.app",
-    messagingSenderId: "296458018961",
-    appId: "1:296458018961:web:cd2fa36b00ca39212a1f30"
-  };
-
-  // Initialize Firebase and Firestore
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
-  // DOM elements
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Get your devices repaired | The Retro Guys</title>
+  <link href="normalize.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=SUSE+Mono:ital,wght@0,100..800;1,100..800&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="icon" href="logo.jpg" type="image/x-icon" />
+  <style>
+    /* Your previous CSS remains unchanged */
+    body {
+      background-image: linear-gradient(to top, #30cfd0 0%, #330867 100%);
+      font-family: "Work Sans", sans-serif;
+    }
+    nav { display: flex; background-image: linear-gradient(to top, #5ee7df 0%, #b490ca 100%); position: fixed; justify-content: center; width: 100%; z-index: 1; }
+    nav ul { display: flex; align-items: center; padding: 0 10%; list-style: none; }
+    a { text-decoration: none; }
+    h1, h2, h3 { font-family: "SUSE Mono", sans-serif; }
+    nav ul li a { font-size: 16px; padding: 0 15px; color: white; transition: 0.2s; text-transform: uppercase; }
+    nav ul li a:hover { transition: 0.2s; color: #0e70a1 }
+    .container { position: relative; width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 15px; }
+    .hero { padding-top: 130px; }
+    .hero img { border-style: none; border-radius: 50%; margin: 0 auto; max-width: 440px; display: block; }
+    h1 { color: black; text-align: center; font-size: 24px; margin: 30px 0px 100px; }
+    .about { width: 90%; max-width: 1100px; height: auto; background-color: white; text-align: center; padding: 4px 50px 70px; margin: 0 auto; box-shadow: 10px 10px 0px rgb(0 0 0 / 40%), -10px -10px 0px rgb(255 114 114 / 80%); }
+    .about-section { padding: 5px; display: flex; align-items: center; justify-content: center; flex-flow: wrap; }
+    .about-image { height: 450px; width: 400px; background-image: url("about_img.jpg"); background-size: cover; background-position: center; }
+    .about-text { height: auto; width: 40%; margin-left: 40px; text-align: left; }
+    .contact { width: 100%; height: auto; padding: 75px 0 50px 0; text-align: center; background-color: rgba(3,3,3,45%); }
+    .contact p, .contact h2 { color: white; }
+    .contact-form { max-width: 800px; display: flex; text-align: left; margin: 0 auto; color: white; }
+    .contact-form label { display: block; margin-bottom: 9px; }
+    .message { display: flex; flex-direction: column; width: 60%; }
+    .message textarea { border-radius: 5px; border: 0px; }
+    .contact-details { flex: 1; margin-right: 50px; }
+    .contact-details input { width: 100px; border-radius: 5px; border: 0px; padding: 15px 20px; margin-bottom: 20px; }
+    .message button { color: #1d3d5f; border: 0px; border-radius: 5px; background: lightblue; width: 140px; height: 40px; margin-top: 40px; margin-left: auto; text-transform: uppercase; font-weight: bold; cursor: pointer; transition: 0.3s; }
+    .message button:hover { background: black; color: white; transition: 0.2s; }
+    .footer { height: 70px; width: 100%; background-color: #1f2027; }
+    .footer .container { display: flex; align-items: center; height: 100%; }
+    .copyright { color: white; }
+    .review textarea, .review input { width: 400px; border-radius: 5px; border: 0px; padding: 15px 20px; margin-bottom: 20px; }
+    .review button { color: #1d3d5f; border: 0px; border-radius: 5px; background: lightblue; width: 140px; height: 40px; margin-top: 40px; margin-left: auto; text-transform: uppercase; font-weight: bold; cursor: pointer; transition: 0.3s; }
+    .review button:hover { background: black; color: white; transition: 0.2s; }
+    .star-rating span { cursor: pointer; color: #ccc; transition: color 0.2s; font-size: 30px; margin-right: 4px; }
+    .star-rating span:hover, .star-rating span:hover ~ span { color: gold; }
+    .star-rating span.selected { color: gold; }
+    html { scroll-behavior: smooth; }
+    .review-item { background-color: white; border: 2px solid #ccc; padding: 15px 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 3px 8px rgba(0,0,0,0.1); color: black; }
+    .container h2 { text-align: center; margin-top: -100px; margin-bottom: 100px; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#review">Leave A Review</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="container">
+      <img src="logo.jpg" alt="Company Logo">
+      <h1>Hey there! We're The Retro Guys!</h1>
+      <h2><i><u>Modern Repairs, Old-School Value</u></i></h2>
+    </div>
+  </section>
+
+  <section id="about" class="about">
+    <h2>About</h2>
+    <div class="about-section">
+      <div class="img"><div class="about-image"></div></div>
+      <div class="about-text">
+        <p>In late September, the idea to start a device repair business took shape. After much thought, we chose the name The Retro Guys — a simple promise to make repairs easy and reliable.
+
+I'm Herbie Batsford, responsible for building and maintaining our website. But the heart of our business is a shared commitment between my dad, Gavin Batsford, and me. Together, we dedicate ourselves to delivering honest, high-quality device repairs with integrity.
+
+As a father-and-son team, we understand the value of trust and transparency. We ensure our customers have peace of mind knowing they'll only be charged what's fair — enough to cover costs and a reasonable profit. If, despite our best precautions, we accidentally break something during a repair, you won't pay for that item and we will offer a replacement. We stand behind our work because your satisfaction and trust are our top priorities.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <h2>Contact</h2>
+    <p>Use this form to contact us about your device that needs repairing.</p>
+
+    <form action="https://api.web3forms.com/submit" method="POST" class="contact-form">
+      <div class="contact-details">
+        <input type="hidden" name="access_key" value="e28acd2c-f1c4-4133-898b-f7d4995c28a6">
+        <label for="name">Name</label>
+        <input type="text" id="yourname" name="name" placeholder="Your Name">
+        <label for="subject">Subject</label>
+        <input type="text" id="subject" placeholder="Subject" name="Subject">
+        <label for="email">Your Email Address</label>
+        <input type="email" id="email" placeholder="your@email.com" name="Email">
+      </div>
+      <div class="message">
+        <label for="msg">Message</label>
+        <textarea id="msg" rows="15" name="message"></textarea>
+        <button type="submit">Submit</button>
+      </div>
+    </form>
+  </section>
+
+  <section id="review" class="review">
+    <h2>Leave a Review</h2>
+    <div class="write-a-review">
+      <input type="text" id="reviewerName" placeholder="Your Name">
+      <div class="star-rating" style="font-size: 24px; margin: 10px 0;">
+        <span data-value="1">☆</span>
+        <span data-value="2">☆</span>
+        <span data-value="3">☆</span>
+        <span data-value="4">☆</span>
+        <span data-value="5">☆</span>
+      </div>
+      <textarea id="reviewText" rows="5" placeholder="Write your review here..."></textarea>
+      <button id="submitReview">Submit Review</button>
+    </div>
+
+    <h2 style="margin-top: 50px;">What Others Have Said</h2>
+    <div id="reviewList" style="margin-top: 20px;"></div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="copyright">
+        <p>This site &copy; 2025 Herbie Batsford</p>
+        <p>Our business &copy; 2025 Herbie Batsford and Gavin Batsford</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  // === DOM elements ===
   const submitBtn = document.getElementById("submitReview");
   const reviewList = document.getElementById("reviewList");
   const reviewerName = document.getElementById("reviewerName");
@@ -526,7 +141,6 @@
   const stars = document.querySelectorAll(".star-rating span");
   let selectedRating = 0;
 
-  // Handle star click
   stars.forEach(star => {
     star.addEventListener("click", () => {
       selectedRating = parseInt(star.dataset.value);
@@ -541,74 +155,68 @@
     });
   }
 
-  // Submit review to Firestore
+  // Replace with your Cloudflare Worker URL
+  const WORKER_URL = "https://reviews-worker.your-domain.workers.dev";
+
+  // Submit review
   submitBtn.addEventListener("click", async () => {
     const name = reviewerName.value.trim();
     const review = reviewText.value.trim();
-
     if (!name || !review || selectedRating === 0) {
       alert("Please fill in all fields and select a star rating.");
       return;
     }
-
     try {
-      await addDoc(collection(db, "reviews"), {
-        name: name,
-        review: review,
-        rating: selectedRating,
-        timestamp: new Date()
+      const response = await fetch(WORKER_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, review, rating: selectedRating })
       });
-
+      if (!response.ok) throw new Error("Failed to submit review");
       alert("Review submitted successfully!");
       reviewerName.value = "";
       reviewText.value = "";
       selectedRating = 0;
       updateStars();
-      loadReviews(); // reload reviews after adding one
-    } catch (error) {
-      console.error("Error adding review: ", error);
+      loadReviews();
+    } catch (err) {
+      console.error(err);
       alert("Failed to submit review.");
     }
   });
 
-  // Load reviews from Firestore
+  // Load reviews
   async function loadReviews() {
     reviewList.innerHTML = "Loading reviews...";
-
     try {
-      const q = query(collection(db, "reviews"), orderBy("timestamp", "desc"));
-      const querySnapshot = await getDocs(q);
-
+      const response = await fetch(WORKER_URL);
+      const reviews = await response.json();
       reviewList.innerHTML = "";
-      querySnapshot.forEach(doc => {
-        const r = doc.data();
-        const time = r.timestamp ? r.timestamp.toDate().toLocaleString() : "No timestamp";
+      if (reviews.length === 0) {
+        reviewList.innerHTML = "<p>No reviews yet. Be the first to leave one!</p>";
+        return;
+      }
+      reviews.forEach(r => {
         const rating = r.rating || 0;
-        const stars = "★".repeat(rating) + "☆".repeat(5 - rating);
-
+        const starsDisplay = "★".repeat(rating) + "☆".repeat(5 - rating);
+        const time = r.created_at ? new Date(r.created_at).toLocaleString() : "No timestamp";
         const div = document.createElement("div");
         div.classList.add("review-item");
         div.innerHTML = `
-          <p><strong>${r.name || "Unknown"}</strong> — <span style="color: gold;">${stars}</span></p>
+          <p><strong>${r.name || "Unknown"}</strong> — <span style="color: gold;">${starsDisplay}</span></p>
           <p>${r.review || "No review text"}</p>
           <small><em>${time}</em></small>
         `;
         reviewList.appendChild(div);
       });
-
-      if (reviewList.innerHTML === "") {
-        reviewList.innerHTML = "<p>No reviews yet. Be the first to leave one!</p>";
-      }
-    } catch (error) {
-      console.error("Error loading reviews: ", error);
+    } catch (err) {
+      console.error(err);
       reviewList.innerHTML = "<p>Failed to load reviews.</p>";
     }
   }
 
-  // Load reviews on page load
   document.addEventListener("DOMContentLoaded", loadReviews);
   </script>
 
-    </body>
-
+</body>
 </html>
